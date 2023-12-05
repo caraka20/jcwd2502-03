@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineArrowRight } from "react-icons/ai";
 import CardProduct from '../CardProduct/CardProduct';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../config/api';
 
 const BestDeals = () => {
+
+  const [data, setData] = useState([])
+  const getData = async () => {
+    try {
+      const res = await axiosInstance.get("/product")
+      setData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const sixTopProducts = data.slice(0, 5);
+
+  useEffect(() => {
+    getData()
+  },[])
+
   return (
     <>
       <div className=' m-auto my-[20px] w-full grid mt-[20px] '>
@@ -13,7 +31,7 @@ const BestDeals = () => {
         </div>
         <div className='w-full'>
             <div className='flex justify-center gap-2 flex-wrap mx-[20px]'>
-            <CardProduct />
+            <CardProduct data={sixTopProducts} />
             </div>
         </div>
       </div>

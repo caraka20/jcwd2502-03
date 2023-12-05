@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../config/api";
 
-const OptionWarehouse = (props, ) => {
+const OptionWarehouse = (props ) => {
     const {warehouses} = props
 
 
@@ -17,7 +17,7 @@ const OptionWarehouse = (props, ) => {
         </option>
         {warehouses &&
           warehouses.map((value, index) => {
-            return <option value={value.id}>{value.name}</option>;
+            return <option key={index} value={value.id}>{value.name}</option>;
           })}
       </select>
     </>

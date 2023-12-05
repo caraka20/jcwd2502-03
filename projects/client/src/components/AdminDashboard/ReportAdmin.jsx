@@ -60,7 +60,7 @@ const ReportAdmin = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
     const getWarehouseData = async () => {
         try {
             const res = await axiosInstance.get("/order/warehouses");
-            // console.log(res);
+
             setWarehouses(res.data.data);
         } catch (error) {
             alert(error);
@@ -77,7 +77,7 @@ const ReportAdmin = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
                 ? res.data.result.countNewOrder
                 : [res.data.result.countNewOrder];
 
-            console.log(res.data.result.countNewOrder);
+
             setAdminOrderList(dataAsArray);
         } catch (error) {
             console.log(error);
@@ -92,7 +92,7 @@ const ReportAdmin = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
       setWarehouse2("");
   };
 
-    // console.log(adminOrderList);
+
 
     const userRole = async () => {
         try {
@@ -107,7 +107,7 @@ const ReportAdmin = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
     const productCategory = async () => {
         try {
             const res = await axiosInstance.get(`/category/`);
-            console.log(res.data);
+
             setCategory(res.data);
         } catch (error) {
             console.log(error);
@@ -117,7 +117,7 @@ const ReportAdmin = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
     const productData = async () => {
         try {
             const res = await axiosInstance.get(`/product/`);
-            console.log(res.data);
+
             setProduct(res.data);
         } catch (error) {
             console.log(error);

@@ -15,7 +15,7 @@ const CardCategory = () => {
       console.log(error);
     }
   };
-  console.log(categories);
+
   useEffect(() => {
     getKategori();
   }, []);

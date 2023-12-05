@@ -9,7 +9,7 @@ const ModalAddProduct = ({ onPress }) => {
     JSON.parse(localStorage.getItem("product"))
   );
   const [idEdit, setIdEdit] = useState(null);
-  console.log(idEdit);
+
   const [kategori, setKategori] = useState(null);
   const [data, setData] = useState({
     product_name: "",
@@ -19,7 +19,7 @@ const ModalAddProduct = ({ onPress }) => {
     products_categories_id: null,
   });
   const [images, setImages] = useState([]);
-  console.log(images);
+
   const getKategori = async () => {
     const res = await axiosInstance.get("/category");
     setKategori(res.data);
@@ -60,8 +60,7 @@ const ModalAddProduct = ({ onPress }) => {
         images.forEach((value) => {
           fd.append("images", value);
         });
-        // console.log(fd.get("data"));
-        // console.log(fd.get("images"));
+    
         const res = await axiosInstance.post(`/product`, fd);
         setTimeout(() => {
           toast.success(res.data.message);

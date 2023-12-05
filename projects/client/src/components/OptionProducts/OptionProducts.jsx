@@ -10,7 +10,7 @@ const OptionProduct = (props) => {
     // "Order Completed",
     // "Order Canceled"
 
-    // console.log(product);
+
 
     return (
         <>
@@ -23,7 +23,7 @@ const OptionProduct = (props) => {
                     {props.valueName || "Select Product"}
                 </option>
                 {product && product.map((value, index) => {
-                    // console.log(value)
+
                     return (
                         <option key={index} value={value.id}>
                             {value.product_name}

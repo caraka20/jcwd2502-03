@@ -147,7 +147,7 @@ module.exports = {
       const editStock = await db.products_stocks.update(
         {
           ...dataStock.dataValues,
-          stock: dataStock.dataValues.stock - quantity,
+          stock: Number(dataStock.dataValues.stock) - Number(quantity),
         },
         {
           where: { id: dataStock.dataValues.id },
@@ -167,7 +167,7 @@ module.exports = {
       const editStock = await db.products_stocks.update(
         {
           ...dataStock.dataValues,
-          stock: dataStock.dataValues.stock + quantity,
+          stock: Number(dataStock.dataValues.stock) + Number(quantity,)
         },
         {
           where: { id: dataStock.dataValues.id },

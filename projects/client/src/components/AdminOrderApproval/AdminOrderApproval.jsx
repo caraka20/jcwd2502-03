@@ -18,7 +18,7 @@ const AdminOrderApproval = ({
   const [ordersDetails, setOrdersDetails] = useState([]);
   const [transaction_uid, setTransaction_uid] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(transaction_uid);
+
   const navigate = useNavigate();
 
 
@@ -61,7 +61,7 @@ const AdminOrderApproval = ({
     getOrderList();
   }, []);
 
-  console.log(order);
+
 
   return (
     <>

@@ -50,7 +50,7 @@ export default function UserListTable() {
                 : [res.data.result];
 
             const wdata = await axiosInstance.get(`/warehouse`);
-            // console.log(wdata.data.data)
+
             const newData = dataAsArray.map((value) => {
                 const data = wdata.data.data.find(
                     (item) => item.id === value.warehouses_id
@@ -64,7 +64,7 @@ export default function UserListTable() {
             // console.log(newData)
             setProduct(newData);
 
-            // console.log(dataAsArray);
+
         } catch (error) {
             console.log(error.response.data.message);
         }
@@ -92,7 +92,7 @@ export default function UserListTable() {
 
     const handleDelete = async (id) => {
         try {
-            console.log(id);
+
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: "btn btn-success",
@@ -198,7 +198,7 @@ export default function UserListTable() {
                             "user",
                             JSON.stringify(hasil.data)
                         );
-                        console.log(hasil.data);
+
                         onOpen();
                     } catch (error) {
                         console.log(error);

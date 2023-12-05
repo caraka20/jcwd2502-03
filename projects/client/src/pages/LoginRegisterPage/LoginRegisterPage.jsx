@@ -113,7 +113,7 @@ const LoginRegisterPage = () => {
     );
 
     useEffect(() => {
-        console.log({fullname})
+
     },[fullname])
 
     return (

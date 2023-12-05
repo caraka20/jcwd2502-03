@@ -13,7 +13,7 @@ import ModalShowProduct from "../ModalShowProduct/ModalShowProduct";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 import { Card, CardHeader, Image, CardBody } from "@nextui-org/react";
-console.log(process.env.REACT_APP_IMAGE_SERVER_URL_IMAGE);
+
 
 const CardProduct = ({ data, addToCart }) => {
   const datas = data;
@@ -29,7 +29,7 @@ const CardProduct = ({ data, addToCart }) => {
     }
   };
 
-  console.log(process.env.REACT_APP_IMAGE_SERVER_URL_IMAGE);
+
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = currentPage * itemsPerPage;
@@ -46,7 +46,7 @@ const CardProduct = ({ data, addToCart }) => {
       setCurrentPage(currentPage - 1);
     }
   };
-  // console.log(datas);
+
   return (
     <>
       <div

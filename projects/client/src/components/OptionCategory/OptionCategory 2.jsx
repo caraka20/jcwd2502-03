@@ -10,7 +10,7 @@ const OptionCategory = (props) => {
     // "Order Completed",
     // "Order Canceled"
 
-
+    // console.log(category);
 
     return (
         <>
@@ -23,7 +23,7 @@ const OptionCategory = (props) => {
                     {props.valueName || "Select Category"}
                 </option>
                 {category && category.map((value, index) => {
-
+                    // console.log(value)
                     return (
                         <option key={index} value={value.id}>
                             {value.category}

@@ -753,13 +753,19 @@ module.exports = {
     page,
     warehouses_id2
   ) => {
-    where = {};
+   let where = {};
     if (status) {
       where.status = status;
     }
-    if (warehouses_id2) {
+    if (warehouses_id2 && role === "Owner") {
       where.warehouses_id = Number(warehouses_id2);
     }
+
+    if (role === "Warehouse Admin") {
+      where.warehouses_id = warehouses_id;
+    }
+
+    console.log(where);
     try {
       const limit = 8;
       if (role === "Warehouse Admin") {

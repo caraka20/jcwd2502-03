@@ -21,7 +21,7 @@ const ViewPaymentModal = ({
       const res = await axiosInstance.put("/order/confirm", {
         products: ordersDetails, users_id: order.users_id
       });
-      console.log(res);
+
       toast.success(res.data.message);
       setIsModalOpen(false);
       getOrderList();

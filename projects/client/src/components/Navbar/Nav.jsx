@@ -24,19 +24,15 @@ const Nav = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(Cookies.get("user_token"));
 const [admin, setAdmin] = useState()
-// console.log(user);
   const dispatch = useDispatch();
   const [localId, setLocalId] = useState(null);
   const param = useLocation();
   const [text, setText] = useState(param.pathname);
 
   const [role, setRole] = useState(null);
-// console.log(role);
 
-  // console.log(dispatch(getCartAsync()));
 
   const cart = useSelector((state) => state.order.cart);
-  console.log(cart);
 
   useEffect(() => {
     dispatch(getCartAsync());
@@ -97,7 +93,7 @@ const [admin, setAdmin] = useState()
   }, 0);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+
   };
 
   return (

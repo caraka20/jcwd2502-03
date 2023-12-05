@@ -17,8 +17,8 @@ const AdminOrderList = ({ setIsRefreshing, isRefreshing, refreshOrders }) => {
   const [optionStatus, setOptionStatus] = useState("");
   const [warehouse2, setWarehouse2] = useState("");
   const [warehouses, setWarehouses] = useState([]);
-  console.log(warehouse2);
-  console.log(optionStatus);
+
+
   const [maxPages, setMaxPages] = useState(null);
 
   const cardsPerPage = 8; // Number of cards to display per page

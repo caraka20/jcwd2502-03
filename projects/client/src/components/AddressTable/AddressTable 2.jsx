@@ -46,7 +46,7 @@ export default function AddressTable() {
         return address.slice(start, end);
     }, [page, address]);
 
-    console.log(address);
+
 
     return (
         <Table

@@ -27,7 +27,7 @@ const SwiperAuto = ({ gambar }) => {
               <SwiperSlide className="imag">
                 <img
                 className=""
-                  src={`http://localhost:8000${item.image.substring(6)}`}
+                  src={`${process.env.REACT_APP_IMAGE_SERVER_URL_IMAGE}${item.image.substring(6)}`}
                   alt=""
                 />
               </SwiperSlide>

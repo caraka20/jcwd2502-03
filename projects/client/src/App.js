@@ -28,7 +28,7 @@ function App() {
 
     const currentPath = location.pathname;
 
-    console.log(currentPath);
+
 
     return (
         <>

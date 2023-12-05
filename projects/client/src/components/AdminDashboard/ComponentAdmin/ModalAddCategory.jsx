@@ -22,7 +22,7 @@ const ModalAddCategory = ({ onPress }) => {
       const idKategori = localStorage.getItem("kategori");
       setIdKategory(idKategori);
       const res = await axiosInstance.get(`/category/${idKategori}`);
-      console.log(res.data);
+
       setInput({
         category: res.data.category,
       });
@@ -72,8 +72,7 @@ const ModalAddCategory = ({ onPress }) => {
         images.forEach((value) => {
           fd.append("images", value);
         });
-        // console.log(fd.get("data"));
-        // console.log(fd.get("images"));
+
         const res = await axiosInstance.post(`/category`, fd);
         setTimeout(() => {
           toast.success(res.data.message);

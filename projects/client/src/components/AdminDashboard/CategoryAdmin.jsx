@@ -167,7 +167,6 @@
 
 // export default CategoryAdmin;
 
-
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -212,11 +211,11 @@ export default function ProductsAdmin() {
         try {
           const data = await axiosInstance.get(`/category?category_status=Active`); // data kategori
           const res = await axiosInstance.get(`/product?product_status=Active`); // data product , product punya kategori_id
-          console.log(res.data);
+
           const categoryCounts = {};
           for (const product of res.data) {
             const categoryId = product.products_category.id && product.products_category.id; //2
-            console.log(categoryId);
+
             if (categoryCounts[categoryId]) {
               categoryCounts[categoryId]++;
             } else {
@@ -227,7 +226,7 @@ export default function ProductsAdmin() {
             const categoryId = product.products_category.id;
             product.total_product = categoryCounts[categoryId];
           }
-    console.log(categoryCounts);
+
           const categoryMap = new Map();
           data.data.forEach((category) => {
             categoryMap.set(category.id, category);
@@ -241,56 +240,56 @@ export default function ProductsAdmin() {
               category.total_product = product.total_product;
             }
           });
-          console.log(data.data);
+
           setCategories(data.data);
         } catch (error) {
           console.log(error);
         }
       };
-console.log(categories);
+
   useEffect(() => {
     getKategori();
   }, []);
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     const swalWithBootstrapButtons = Swal.mixin({
-  //       customClass: {
-  //         confirmButton: "btn btn-success",
-  //         cancelButton: "btn btn-danger",
-  //       },
-  //       buttonsStyling: true,
-  //     });
+  const handleDelete = async (id) => {
+    try {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: true,
+      });
 
-  //     const result = await swalWithBootstrapButtons.fire({
-  //       title: "Are you sure?",
-  //       text: "you want to delete?",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonText: "Yes, delete it!",
-  //       cancelButtonText: "No, cancel!",
-  //       reverseButtons: true,
-  //     });
+      const result = await swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "you want to delete?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      });
 
-  //     if (result.isConfirmed) {
-  //       const response = await axiosInstance.delete(`/product/${id}`);
-  //       swalWithBootstrapButtons.fire({
-  //         title: "Deleted!",
-  //         text: response.data.message,
-  //         icon: "success",
-  //       });
-  //       getProduct()
-  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //       swalWithBootstrapButtons.fire({
-  //         title: "Cancelled",
-  //         text: "Delete has been cancelled",
-  //         icon: "error",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.response.data.message);
-  //   }
-  // };
+      if (result.isConfirmed) {
+        const response = await axiosInstance.delete(`/category/${id}`);
+        swalWithBootstrapButtons.fire({
+          title: "Deleted!",
+          text: response.data.message,
+          icon: "success",
+        });
+        getKategori()
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Delete has been cancelled",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -302,7 +301,9 @@ console.log(categories);
           <User
             avatarProps={{
               radius: "lg",
-              src: `http://localhost:8000${user.category_image}`,
+              src: `${
+                process.env.REACT_APP_IMAGE_SERVER_URL_IMAGE
+              }${user.category_image.substring(6)}`,
             }}
             // description={user.products_category.category}
             name={cellValue}
@@ -324,22 +325,25 @@ console.log(categories);
           try {
             const hasil = await axiosInstance.get(`/product/${id}`)
             localStorage.setItem("kategori", JSON.stringify(hasil.data))
-            // console.log("lala");
+
             onOpen()
           } catch (error) {
             console.log(error);
           }
-        }
+        };
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Edit user">
-              <span onClick={()=>onEdit(user.id)} className="text-xl text-default-400 cursor-pointer active:opacity-50">
-                <FaRegEdit  />
+              <span
+                onClick={() => onEdit(user.id)}
+                className="text-xl text-default-400 cursor-pointer active:opacity-50"
+              >
+                <FaRegEdit />
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
-              <span className="text-xl text-danger cursor-pointer active:opacity-50">
-                <MdDelete  />
+              <span onClick={() => handleDelete(user.id)} className="text-xl text-danger cursor-pointer active:opacity-50">
+                <MdDelete />
                 {/* onClick={() => handleDelete(user.id)} */}
               </span>
             </Tooltip>

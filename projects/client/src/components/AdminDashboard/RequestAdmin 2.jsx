@@ -12,7 +12,8 @@ import {
 } from "@nextui-org/react";
 import { Modal, ModalContent, Button, useDisclosure } from "@nextui-org/react";
 import axiosInstance from "../../config/api";
-import { FaRegEdit } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
 import ModalAddProduct from "./ComponentAdmin/ModalAddProduct";
 import toast from "react-hot-toast";
@@ -21,19 +22,20 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
 const statusColorMap = {
-    active: "success",
-    paused: "danger",
-    vacation: "warning",
+    Approved: "success",
+    Pending: "danger",
 };
+
 const columns = [
-    { name: "PRODUCT", uid: "product_name" },
-    { name: "STOCK", uid: "stock" },
-    { name: "PRICE", uid: "product_price" },
-    { name: "WEIGHT", uid: "product_weight" },
+    { name: "PRODUCT", uid: "product" },
+    { name: "QUANTITY", uid: "quantity" },
+    { name: "STATUS", uid: "status" },
+    { name: "REQUEST WAREHOUSE", uid: "request_warehouses_id" },
+    { name: "WAREHOUSE ADMIN", uid: "user" },
     { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function ProductsAdmin() {
+export default function RequestAdmin() {
     const { role } = useSelector((state) => state.user);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modalPlacement, setModalPlacement] = React.useState("auto");
@@ -43,9 +45,9 @@ export default function ProductsAdmin() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const getProduct = async () => {
         try {
-            const res = await axiosInstance.get("/product");
-
-            setProduct(res.data);
+            const res = await axiosInstance.get("/admin/mutations");
+            console.log(res.data.result);
+            setProduct(res.data.result);
         } catch (error) {
             console.log(error.response.data.message);
         }
@@ -57,7 +59,7 @@ export default function ProductsAdmin() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
     const currentData = product?.slice(startIndex, endIndex);
-
+    // console.log(currentData);
 
     const nextPage = () => {
         if (endIndex < product.length) {
@@ -68,6 +70,46 @@ export default function ProductsAdmin() {
     const prevPage = () => {
         if (startIndex > 0) {
             setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleAccept = async (id) => {
+        try {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger",
+                },
+                buttonsStyling: true,
+            });
+
+            const result = await swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You want to accept stock mutation?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, accept it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true,
+            });
+
+            if (result.isConfirmed) {
+                // const response = await axiosInstance.delete(`/product/${id}`);
+                swalWithBootstrapButtons.fire({
+                    title: "Accepted!",
+                    text: "Success accept stock mutation!",
+                    icon: "success",
+                });
+                getProduct();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Stock mutation has been cancelled!",
+                    icon: "error",
+                });
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
         }
     };
 
@@ -83,26 +125,26 @@ export default function ProductsAdmin() {
 
             const result = await swalWithBootstrapButtons.fire({
                 title: "Are you sure?",
-                text: "you want to delete?",
+                text: "You want to decline stock mutation?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Yes, decline it!",
                 cancelButtonText: "No, cancel!",
                 reverseButtons: true,
             });
 
             if (result.isConfirmed) {
-                const response = await axiosInstance.delete(`/product/${id}`);
+                // const response = await axiosInstance.delete(`/product/${id}`);
                 swalWithBootstrapButtons.fire({
-                    title: "Deleted!",
-                    text: response.data.message,
+                    title: "Declined!",
+                    text: "Success decline stock mutation!",
                     icon: "success",
                 });
                 getProduct();
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 swalWithBootstrapButtons.fire({
-                    title: "Cancelled",
-                    text: "Delete has been cancelled",
+                    title: "Cancelled!",
+                    text: "Decline stock mutation has been cancelled!",
                     icon: "error",
                 });
             }
@@ -115,24 +157,12 @@ export default function ProductsAdmin() {
         const cellValue = user[columnKey];
         // {`http://localhost:8000${user.products_images[0].substring(6)}`}
         switch (columnKey) {
-            case "product_name":
+            case "product":
                 // user.products_images[0]
                 return (
-                    <User
-                        className=""
-                        avatarProps={{
-                            radius: "lg",
-                            src: `${process.env.REACT_APP_IMAGE_SERVER_URL_IMAGE}${user.products_images[0].image.substring(
-                                6
-                            )}`,
-                        }}
-                        description={user.products_category.category}
-                        name={cellValue}
-                    >
-                        {user.products_category.category}
-                    </User>
+                    <div>{user.product.product_name}</div>
                 );
-            case "stock":
+            case "quantity":
                 return (
                     <div className="flex flex-col">
                         <p className={`text-bold text-sm capitalize`}>
@@ -141,13 +171,29 @@ export default function ProductsAdmin() {
                         {/* <p className="text-bold text-sm capitalize text-default-400">{user.team}</p> */}
                     </div>
                 );
-            case "product_price":
+            case "user":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small capitalize">
+                            {cellValue.fullname}
+                        </p>
+                    </div>
+                );
+            case "warehouse":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small capitalize">
+                            {cellValue.name}
+                        </p>
+                    </div>
+                );
+            case "status":
                 return (
                     <Chip
                         className="capitalize"
-                        color={statusColorMap[user.status]}
+                        color={statusColorMap[cellValue.status]}
                         size="sm"
-                        variant=""
+                        variant="dot"
                     >
                         {cellValue}
                     </Chip>
@@ -160,7 +206,7 @@ export default function ProductsAdmin() {
                             "product",
                             JSON.stringify(hasil.data)
                         );
-
+                        console.log(hasil.data);
                         onOpen();
                     } catch (error) {
                         console.log(error);
@@ -168,25 +214,21 @@ export default function ProductsAdmin() {
                 };
                 return (
                     <div className="relative flex items-center gap-2">
-                        {role === "Owner" && (
-                            <Tooltip content="Edit product">
-                                <span
-                                    onClick={() => onEdit(user.id)}
-                                    className="text-xl text-default-400 cursor-pointer active:opacity-50"
-                                >
-                                    <FaRegEdit />
-                                </span>
-                            </Tooltip>
-                        )}
-                        {role === "Owner" && (
-                            <Tooltip color="danger" content="Delete product">
-                                <span className="text-xl text-danger cursor-pointer active:opacity-50">
-                                    <MdDelete
-                                        onClick={() => handleDelete(user.id)}
-                                    />
-                                </span>
-                            </Tooltip>
-                        )}
+                        <Tooltip content="Accept">
+                            <span
+                                onClick={() => handleAccept(user.id)}
+                                className="text-xl text-default-400 cursor-pointer active:opacity-50"
+                            >
+                                <FaCheckCircle />
+                            </span>
+                        </Tooltip>
+                        <Tooltip color="danger" content="Decline">
+                            <span className="text-xl text-danger cursor-pointer active:opacity-50">
+                                <ImCross
+                                    onClick={() => handleDelete(user.id)}
+                                />
+                            </span>
+                        </Tooltip>
                     </div>
                 );
             default:
@@ -197,7 +239,7 @@ export default function ProductsAdmin() {
     return (
         <div className="flex flex-col">
             <div className="flex justify-between mx-3 my-3">
-                <span>PRODUCTS</span>
+                <span>STOCK MUTATIONS</span>
                 <div className="flex flex-col gap-2">
                     {role === "Owner" && (
                         <Button onPress={onOpen} className="max-w-fit">
@@ -284,7 +326,7 @@ export default function ProductsAdmin() {
                     </button>
                 </div>
             ) : (
-                <>lala</>
+                <></>
             )}
         </div>
     );

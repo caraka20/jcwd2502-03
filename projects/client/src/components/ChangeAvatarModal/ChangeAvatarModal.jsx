@@ -43,9 +43,6 @@ export default function ChangeAvatarModal() {
             const fd = new FormData();
             fd.append("images", images);
 
-            console.log(fd.get("images"));
-
-            console.log(images);
 
             const res = await axiosInstance.post(`/user/avatar`, fd);
 

@@ -23,7 +23,7 @@ export default function Protected({
       console.log(error);
     }
   };
-  // console.log(ownerPage);
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -32,10 +32,10 @@ export default function Protected({
 
   useEffect(() => {
     // getUser()
-    console.log(user);
-    console.log(customerPage);
+
+
     if (user == "Owner" && customerPage === true)
-      // console.log("ll")
+
       return (
         // setTimeout(() => {
         //   // setLoading(false);

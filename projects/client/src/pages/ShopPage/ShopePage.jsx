@@ -45,19 +45,19 @@ const ShopePage = () => {
       const res = await axiosInstance.get(`/product${param.search}&search=${searchProductName}&sortBy=${filter.sortBy}&product_status=Active`
       );
       setDatas(res.data);
-      //   console.log(res.data);
+
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(kategori);
-  //   console.log(currentCategory);
+
+
   const handleCategoryChange = (event) => {
     const selectedCategoryId = event.target.value;
     const selectedCategory = kategori.find((item) => {
       return item.id == selectedCategoryId;
     });
-    // console.log(selectedCategory);
+
     if (selectedCategory) {
       nav(`/product?categori=${selectedCategory.category}`);
     } else {

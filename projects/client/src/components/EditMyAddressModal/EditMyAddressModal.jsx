@@ -97,7 +97,6 @@ const EditMyAddressModal = ({
                 confirmButtonText: "Yes, delete it!",
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    console.log(value);
                     const res = await axiosInstance.delete(
                         `/user/delete-address/${value.id}`
                     );

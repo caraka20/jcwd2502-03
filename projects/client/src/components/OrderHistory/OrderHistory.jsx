@@ -88,7 +88,7 @@ const OrderHistory = ({
           search !== undefined ? search : ""
         }`
       );
-      console.log(filter);
+
       setOrderHistory(filter.data.data);
     } catch (error) {
       console.log(error);
@@ -100,7 +100,7 @@ const OrderHistory = ({
       const res = await axiosInstance.post("/order/cancel-order", {
         transaction_uid: transaction_uid,
       });
-      console.log(res);
+
     } catch (error) {
       console.log(error);
     }
@@ -197,7 +197,7 @@ const OrderHistory = ({
           <table className="w-full">
             <tbody className=" w-full ">
               {orderHistory.map((value, index) => {
-                console.log(value);
+
                 return (
                   <tr
                     key={index}

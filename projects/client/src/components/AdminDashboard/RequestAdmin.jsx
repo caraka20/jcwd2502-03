@@ -46,7 +46,7 @@ export default function RequestAdmin() {
     const getProduct = async () => {
         try {
             const res = await axiosInstance.get("/admin/mutations");
-            console.log(res.data.result);
+
             setProduct(res.data.result);
         } catch (error) {
             console.log(error.response.data.message);
@@ -59,7 +59,7 @@ export default function RequestAdmin() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
     const currentData = product?.slice(startIndex, endIndex);
-    // console.log(currentData);
+
 
     const nextPage = () => {
         if (endIndex < product.length) {
@@ -206,7 +206,7 @@ export default function RequestAdmin() {
                             "product",
                             JSON.stringify(hasil.data)
                         );
-                        console.log(hasil.data);
+
                         onOpen();
                     } catch (error) {
                         console.log(error);

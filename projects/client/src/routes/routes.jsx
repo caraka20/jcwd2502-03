@@ -79,7 +79,7 @@ const SideBar = ({ children }) => {
   useEffect(() => {
     if (userToken) {
       socket.on("reject", (message) => {
-        console.log(message);
+
         Swal.fire({
           position: "top-end",
           icon: "warning",
@@ -101,7 +101,7 @@ const SideBar = ({ children }) => {
   useEffect(() => {
     if (userToken) {
       socket.on("Package Sent", (message) => {
-        console.log(message);
+
         Swal.fire({
           position: "top-end",
           icon: "warning",
@@ -123,7 +123,7 @@ const SideBar = ({ children }) => {
   useEffect(() => {
     if (userToken) {
       socket.on("Package Arrived", (message) => {
-        console.log(message);
+
         Swal.fire({
           position: "top-end",
           icon: "warning",
@@ -145,7 +145,7 @@ const SideBar = ({ children }) => {
   useEffect(() => {
     if (userToken) {
       socket.on("accept", (message) => {
-        console.log(message);
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -263,7 +263,7 @@ const SideBarAdmin = ({ children }) => {
   useEffect(() => {
     if (userToken) {
       socket.on("upload", (message) => {
-        console.log(message);
+
         try {
           Swal.fire({
             position: "top-end",

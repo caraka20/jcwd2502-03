@@ -30,7 +30,7 @@ const AddressModal = ({
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [isAddOpen, setIsAddOpen] = useState(false);
-  console.log(value);
+
   const customStyle = {
     content: {
       width: "500px",

@@ -1,7 +1,7 @@
 import React from "react";
 
-const OptionCategory = (props) => {
-    const { category } = props;
+const OptionProduct = (props) => {
+    const { product } = props;
     // "Payment Pending",
     // "Waiting for Payment Approval",
     // "Order Process",
@@ -10,7 +10,7 @@ const OptionCategory = (props) => {
     // "Order Completed",
     // "Order Canceled"
 
-
+    // console.log(product);
 
     return (
         <>
@@ -20,13 +20,13 @@ const OptionCategory = (props) => {
                 onChange={props.onChange}
             >
                 <option selected value="">
-                    {props.valueName || "Select Category"}
+                    {props.valueName || "Select Product"}
                 </option>
-                {category && category.map((value, index) => {
-
+                {product && product.map((value, index) => {
+                    // console.log(value)
                     return (
                         <option key={index} value={value.id}>
-                            {value.category}
+                            {value.product_name}
                         </option>
                     );
                 })}
@@ -35,4 +35,4 @@ const OptionCategory = (props) => {
     );
 };
 
-export default OptionCategory;
+export default OptionProduct;

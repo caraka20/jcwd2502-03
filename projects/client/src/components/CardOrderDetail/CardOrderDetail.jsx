@@ -5,7 +5,7 @@ const CardOrderDetail = ({ ordersDetails }) => {
     return <div>Loading</div>;
   }
 
-  console.log(ordersDetails);
+
   return (
     <>
       {ordersDetails.map((value, index) => {

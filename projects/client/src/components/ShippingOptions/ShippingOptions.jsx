@@ -8,7 +8,7 @@ const ShippingOptions = ({
   setShippingType,
 }) => {
   const [selectedShipping, setSelectedShipping] = useState();
-  console.log(shippingPrice);
+
   const handleShippingOptionClick = (item) => {
     setSelectedShipping(item.service);
     setShippingPrice(item.cost[0].value);

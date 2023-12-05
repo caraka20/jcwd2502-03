@@ -14,7 +14,7 @@ const MyAddressPage = () => {
     const [onClick, setOnClick] = useState();
     const { id } = useSelector((state) => state.user);
 
-    console.log(rajaOngkir);
+
 
     const getAddress = async () => {
         try {

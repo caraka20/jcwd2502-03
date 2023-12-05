@@ -14,7 +14,7 @@ const UploadModal = ({
   orderStatus,
 }) => {
   const [images, setImages] = useState(null);
-  console.log(orderStatus);
+
   const customStyle = {
     content: {
       width: "700px",
@@ -61,7 +61,7 @@ const UploadModal = ({
       fd.append("images", images);
 
       const res = await axiosInstance.put("/order/upload", fd);
-      console.log(res);
+
 
       setIsModalOpen(false);
       Swal.fire({

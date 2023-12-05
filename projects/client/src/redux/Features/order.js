@@ -17,7 +17,7 @@ export const orderSlice = createSlice({
 export const getCartAsync = (data) => async (dispatch) => {
   try {
     const res = await axiosInstance.post("/order/cartdata");
-    console.log(res);
+
     dispatch(setCart(res.data.data));
   } catch (error) {
     console.log(error);

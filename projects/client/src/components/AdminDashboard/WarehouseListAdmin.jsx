@@ -26,7 +26,7 @@ const WarehouseList = () => {
       toast.error("error");
     }
   };
-  // console.log(data);
+
   const getCities = async () => {
     try {
       const res = await axiosInstance.get(
@@ -75,10 +75,10 @@ const WarehouseList = () => {
     try {
       setIdUpdate(e);
       const dataEdit = await axiosInstance.get(`/warehouse/${e}`);
-      // console.log(dataEdit.data.data);
+
       let newData = { ...data };
       newData["name"] = dataEdit.data.data.name;
-      // newData["province_id"] = dataEdit.data.data.provinces_id
+
       setDatas(newData);
     } catch (error) {
       toast.error("error");
