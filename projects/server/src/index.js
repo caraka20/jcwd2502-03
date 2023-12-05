@@ -188,9 +188,63 @@ const checkPackageArrived = async () => {
     console.error("Error canceling orders:", error);
   }
 };
+const orderCompleteAfter7Days = async () => {
+  try {
+    const oneMinutesAgo = new Date();
+    oneMinutesAgo.setDate(oneMinutesAgo.getDate() - 7);
+
+    const [affectedRows] = await db.orders_details.update(
+      { status: "Order Completed" },
+      {
+        where: {
+          createdAt: {
+            [Op.lt]: oneMinutesAgo,
+          },
+          status: "Package Arrived",
+        },
+      }
+    );
+
+    const oneSecondAgo = new Date();
+    oneSecondAgo.setSeconds(oneSecondAgo.getSeconds() - 1);
+
+    const dataWithinOneSecond = await db.orders_details.findAll({
+      where: {
+        updatedAt: {
+          [Op.gte]: oneSecondAgo,
+        },
+        status: "Order Completed",
+      },
+      group: ["transaction_uid"],
+    });
+
+    console.log(dataWithinOneSecond);
+    if (dataWithinOneSecond) {
+      const user = dataWithinOneSecond.map((value) => {
+        console.log(value);
+        return socketIdMap.get(value.users_id);
+      });
+
+      console.log(user);
+
+      if (user) {
+        user.map((value) => {
+          return io.to(value).emit("Order Completed", {
+            message: "Your Order Has Been Completed",
+          });
+        });
+      }
+    }
+
+    console.log(`Order Completed${affectedRows}`);
+  } catch (error) {
+    console.error("Error canceling orders:", error);
+  }
+};
 
 cron.schedule("* * * * *", checkAndUpdateOrders);
 cron.schedule("* * * * *", checkPackageArrived);
+cron.schedule("* * * * *", orderCompleteAfter7Days);
 
 const attachIoToRequest = (req, res, next) => {
   req.io = io;
@@ -211,7 +265,7 @@ const {
   authRouter,
   userRouter,
   adminRouter,
-  reportRouter
+  reportRouter,
 } = require("./routers");
 
 const {

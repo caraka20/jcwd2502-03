@@ -179,7 +179,7 @@ const SidebarAdmin = ({ tabValue, setTabValue, currentPath }) => {
                         <h1 className="text-[14px] ">Manage Stock</h1>
                     </div>
                 </Link>
-                {/* {role === "Owner" && ( */}
+                {role === "Owner" && (
                 <Link to={"/admin/history"}>
                     <div
                         onClick={() => setTabValue(8)}
@@ -191,7 +191,7 @@ const SidebarAdmin = ({ tabValue, setTabValue, currentPath }) => {
                         <h1 className="text-[14px] ">History</h1>
                     </div>
                 </Link>
-                {/* )} */}
+                )}
                 <div
                     onClick={() => setTabValue(9)}
                     className={`flex items-center px-[26px] gap-3 h-[40px] text-[#5F6C72] cursor-pointer ${
