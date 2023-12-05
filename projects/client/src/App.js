@@ -35,7 +35,7 @@ function App() {
             {/* <Provider store={store}> */}
             <Nav />
             {is_verified === false && currentPath !== "/verification" && (
-                <VerificationTab />
+                <VerificationTab is_verified={is_verified} />
             )}
             <Routes>{routes.map((value) => value)}</Routes>
             <Footer />
